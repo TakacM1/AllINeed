@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Text,
   TextInput,
   TouchableOpacity,
   FlatList,
@@ -10,6 +11,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useRouter } from 'expo-router';
 
 import pes from '../../assets/images/pes.png';
 
@@ -17,10 +19,11 @@ const STORAGE_KEY = 'habits';
 const LAST_OPEN_KEY = 'last_open_date';
 const getTodayString = () => new Date().toISOString().slice(0, 10);
 
+
 export default function Testung() {
   const [habits, setHabits] = useState<{ id: string; name: string; done: boolean }[]>([]);
   const [newHabit, setNewHabit] = useState('');
-
+  const router = useRouter();
   useEffect(() => {
     const init = async () => {
       await checkIfNewDay();
@@ -91,9 +94,9 @@ export default function Testung() {
               placeholderTextColor="#ccc"
               style={styles.input}
             />
-            <TouchableOpacity onPress={addHabit} style={styles.addButton}>
-              <ThemedText style={styles.addText}>＋</ThemedText>
-            </TouchableOpacity>
+<TouchableOpacity onPress={() => router.push('/add')} style={styles.addButton}>
+  <Text style={styles.addText}>＋</Text>
+</TouchableOpacity>
           </ThemedView>
 
           <FlatList
